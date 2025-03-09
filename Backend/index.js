@@ -13,7 +13,7 @@ dotenv.config();
 // ✅ Fix CORS: Allow your frontend
 app.use(
     cors({
-        origin: ["https://chat-app-lemon-tau.vercel.app"], // ✅ Only allow your frontend
+        origin: ["https://chat-iavq00l0f-soumenpradhan01428s-projects.vercel.app"], // ✅ Only allow your frontend
         credentials: true, // ✅ Allow cookies for authentication
         methods: ["GET", "POST", "PUT", "DELETE"], // ✅ Allow these methods
         allowedHeaders: ["Content-Type", "Authorization"], // ✅ Allow these headers
