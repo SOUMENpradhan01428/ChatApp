@@ -10,27 +10,32 @@ import { app, server } from "./SocketIO/server.js";
 
 dotenv.config();
 
-// middleware
-app.use(express.json());
-app.use(cookieParser());
+// ✅ Fix CORS: Allow your frontend
 app.use(
     cors({
-        origin: "*", // ✅ Allow both frontend URLs
-        credentials: true, // ✅ Allow cookies (for authentication)
+        origin: ["https://chat-app-lemon-tau.vercel.app"], // ✅ Only allow your frontend
+        credentials: true, // ✅ Allow cookies for authentication
+        methods: ["GET", "POST", "PUT", "DELETE"], // ✅ Allow these methods
+        allowedHeaders: ["Content-Type", "Authorization"], // ✅ Allow these headers
     })
 );
+
+app.use(express.json());
+app.use(cookieParser());
 
 const PORT = process.env.PORT || 3001;
 const URI = process.env.MONGODB_URI;
 
-try {
-    mongoose.connect(URI);
-    console.log("Connected to MongoDB");
-} catch (error) {
-    console.log(error);
-}
+// ✅ Fix Mongoose connection
+mongoose
+    .connect(URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("Connected to MongoDB"))
+    .catch((error) => console.log("MongoDB Connection Error:", error));
 
-//routes
+// Routes
 app.use("/api/user", userRoute);
 app.use("/api/message", messageRoute);
 
